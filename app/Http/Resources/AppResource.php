@@ -23,6 +23,8 @@ class AppResource extends JsonResource
                 'id' => $this->id,
                 'name' => $this->name,
                 'url' => $this->url,
+                'private_link' => $this->private_link,
+                'public_link' => $this->public_link,
                 'description' => $this->description,
                 'plan' => $this->plan,
                 'role' => $this->whenLoaded("role"),
@@ -39,6 +41,5 @@ class AppResource extends JsonResource
                 'last_saved' => $this->created_at->diffForHumans(),
                 'member_count' => $member_count = 0,
         ];
-          }  
+          }
     }
-                

@@ -11,7 +11,6 @@ class UpsertAppAction
 {
     public static function execute(AppData $appData, App $app):App
     {
-    $user = Auth::user();
     $app->name = $appData->name;
     $app->url = $appData->url;
     $app->description = $appData->description;
@@ -25,10 +24,6 @@ class UpsertAppAction
     $app->notification = $appData->notification;
     $app->plugin = $appData->plugin;
     $app->build_setting = $appData->build_setting;
-    $app->private_link = $appData->url.'/'. Str::random(16);
-    $app->public_link = $appData->url.'/' . Str::random(16);
-    $app->user_id = $user->id;
-    $app->role_id = $user->role_id;
     $app->save();
     return $app;
     }

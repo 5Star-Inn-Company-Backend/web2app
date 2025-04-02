@@ -23,11 +23,22 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+Route::get('build/{reference}', function ($reference){
+
+    \App\Jobs\GetBuildJob::dispatch($reference)->delay(now()->addMinutes(2));
+
+    return response()->json(['success'=>true, 'message'=>$reference]);
+});
+
+
 Route::apiResource('member', ManageMemberController::class)->middleware('auth:sanctum');
 
 Route::post("app/convert/{app}", [MyController::class, "convert"])->middleware('auth:sanctum');
 
 Route::apiResource("app", AppsController::class)->middleware('auth:sanctum');
+
+Route::post('/upload', [\App\Http\Controllers\Api\StorageController::class, 'upload']);
 
 Route::get('/cache-all', function () {
     // Clear caches

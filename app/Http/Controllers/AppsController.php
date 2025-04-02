@@ -12,6 +12,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class AppsController extends Controller
 {
@@ -31,15 +34,6 @@ class AppsController extends Controller
         return AppResource::collection(App::where('user_id', $user->id)->get());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -47,9 +41,28 @@ class AppsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UpsertAppRequest $request):JsonResponse
+    public function store(Request $request):JsonResponse
     {
-        return AppResource::make($this->upsert($request, new App()))
+        $input = $request->all();
+
+        $validator = Validator::make($input, [
+            'url' => ['required', 'url', Rule::unique("apps", 'url')],
+            'name' => ['required', 'string', 'max:255', Rule::unique("apps", 'name')],
+            'org' => 'required|min:1',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['status' => false, 'message' => 'There is issue with your payload. '.implode(',',$validator->errors()->all()), 'error'=>$validator->errors()]);
+        }
+
+        $mka=App::create([
+            "name" =>$input['name'],
+            "url" =>$input['url'],
+            "user_id" =>Auth::id(),
+            "private_link" => "pl".Auth::id().Str::random(),
+            "public_link" => Auth::id().Str::random(),
+        ]);
+        return AppResource::make($mka)
         ->response()
         ->setStatusCode(Response::HTTP_CREATED);
     }
@@ -66,31 +79,22 @@ class AppsController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpsertAppRequest $request, App $app):Response
+    public function update(UpsertAppRequest $request, App $app):JsonResponse
     {
         $user = Auth::user();
         if($app->user_id != $user->id){
             return response()->json(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
         }
-        $this->upsert($request, $app);
-        return response()->noContent();
+        $mka=$this->upsert($request, $app);
+        return AppResource::make($mka)
+            ->response()
+            ->setStatusCode(Response::HTTP_CREATED);
     }
 
     /**
