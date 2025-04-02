@@ -84,121 +84,121 @@ class App extends Model
                 }
             }
         }',
-        'link_handling' => '{
-            "internalVsExternalLinks": {
-                "active": true,
-                "items": [
-                    {
-                        "id": 1,
-                        "label": "Non-web links",
-                        "regex": "^(?!https?://).*",
-                        "mode": "external"
-                    },
-                    {
-                        "id": 2,
-                        "label": "Facebook",
-                        "regex": "https?://([-\\w]+\\.)*facebook\\.com.*",
-                        "mode": "appbrowser"
-                    },
-                    {
-                        "id": 3,
-                        "label": "Twitter",
-                        "regex": "https?://([-\\w]+\\.)*twitter\\.com/.*",
-                        "mode": "appbrowser"
-                    },
-                    {
-                        "id": 4,
-                        "label": "Instagram",
-                        "regex": "https?://([-\\w]+\\.)*instagram\\.com/.*",
-                        "mode": "external"
-                    },
-                    {
-                        "id": 5,
-                        "label": "Google Maps",
-                        "regex": "https?://maps\\.google\\.com.*",
-                        "mode": "external"
-                    },
-                    {
-                        "id": 6,
-                        "label": "Google Maps Search",
-                        "regex": "https?://([-\\w]+\\.)*google\\.com/maps/search/.*",
-                        "mode": "external"
-                    },
-                    {
-                        "id": 7,
-                        "label": "LinkedIn",
-                        "regex": "https?://([-\\w]+\\.)*linkedin\\.com/.*",
-                        "mode": "external"
-                    },
-                    {
-                        "id": 8,
-                        "label": "All Other Links",
-                        "regex": ".*",
-                        "mode": "internal"
-                    }
-                ],
-                "itemsDefault": [
-                    {
-                        "mode": "external",
-                        "label": "Non-web links",
-                        "pagesToTrigger": "custom",
-                        "regex": "^(?!https?://).*"
-                    },
-                    {
-                        "mode": "appbrowser",
-                        "label": "Facebook",
-                        "pagesToTrigger": "custom",
-                        "regex": "https?://([-\\w]+\\.)*facebook\\.com.*"
-                    },
-                    {
-                        "mode": "appbrowser",
-                        "label": "Twitter/X",
-                        "pagesToTrigger": "custom",
-                        "regex": "https?://([\\-\\w]+\\.)*(twitter|x)\\.com/.*"
-                    },
-                    {
-                        "mode": "appbrowser",
-                        "label": "Instagram",
-                        "pagesToTrigger": "custom",
-                        "regex": "https?://([-\\w]+\\.)*instagram\\.com/.*"
-                    },
-                    {
-                        "mode": "appbrowser",
-                        "label": "Google Maps",
-                        "pagesToTrigger": "custom",
-                        "regex": "https?://maps\\.google\\.com.*"
-                    },
-                    {
-                        "mode": "appbrowser",
-                        "label": "Google Maps Search",
-                        "pagesToTrigger": "custom",
-                        "regex": "https?://([-\\w]+\\.)*google\\.com/maps/search/.*"
-                    },
-                    {
-                        "mode": "appbrowser",
-                        "label": "LinkedIn",
-                        "pagesToTrigger": "custom",
-                        "regex": "https?://([-\\w]+\\.)*linkedin\\.com/.*"
-                    },
-                    {
-                        "mode": "internal",
-                        "label": "Microsoft Login",
-                        "pagesToTrigger": "custom",
-                        "regex": "https?://login\\.microsoftonline\\.com.*"
-                    },
-                    {
-                        "mode": "appbrowser",
-                        "label": "All Other Links",
-                        "pagesToTrigger": "all",
-                        "regex": ".*"
-                    }
-                ]
-            },
-            "universalLinks": [],
-            "enableAndroidApplinks": false,
-            "androidApplinksCertHash": "6A:BE:8D:D0:DB:37:2B:66:CC:EC:A6:1F:8E:75:4C:71:DE:D5:86:5E:CF:FE:8F:F4:70:C3:82:D9:95:5E:FF:63",
-            "urlSchemeProtocol": ""
-        }',
+//        'link_handling' => '{
+//            "internalVsExternalLinks": {
+//                "active": true,
+//                "items": [
+//                    {
+//                        "id": 1,
+//                        "label": "Non-web links",
+//                        "regex": "^(?!https?://).*",
+//                        "mode": "external"
+//                    },
+//                    {
+//                        "id": 2,
+//                        "label": "Facebook",
+//                        "regex": "https?://([-\\w]+\\.)*facebook\\.com.*",
+//                        "mode": "appbrowser"
+//                    },
+//                    {
+//                        "id": 3,
+//                        "label": "Twitter",
+//                        "regex": "https?://([-\\w]+\\.)*twitter\\.com/.*",
+//                        "mode": "appbrowser"
+//                    },
+//                    {
+//                        "id": 4,
+//                        "label": "Instagram",
+//                        "regex": "https?://([-\\w]+\\.)*instagram\\.com/.*",
+//                        "mode": "external"
+//                    },
+//                    {
+//                        "id": 5,
+//                        "label": "Google Maps",
+//                        "regex": "https?://maps\\.google\\.com.*",
+//                        "mode": "external"
+//                    },
+//                    {
+//                        "id": 6,
+//                        "label": "Google Maps Search",
+//                        "regex": "https?://([-\\w]+\\.)*google\\.com/maps/search/.*",
+//                        "mode": "external"
+//                    },
+//                    {
+//                        "id": 7,
+//                        "label": "LinkedIn",
+//                        "regex": "https?://([-\\w]+\\.)*linkedin\\.com/.*",
+//                        "mode": "external"
+//                    },
+//                    {
+//                        "id": 8,
+//                        "label": "All Other Links",
+//                        "regex": ".*",
+//                        "mode": "internal"
+//                    }
+//                ],
+//                "itemsDefault": [
+//                    {
+//                        "mode": "external",
+//                        "label": "Non-web links",
+//                        "pagesToTrigger": "custom",
+//                        "regex": "^(?!https?://).*"
+//                    },
+//                    {
+//                        "mode": "appbrowser",
+//                        "label": "Facebook",
+//                        "pagesToTrigger": "custom",
+//                        "regex": "https?://([-\\w]+\\.)*facebook\\.com.*"
+//                    },
+//                    {
+//                        "mode": "appbrowser",
+//                        "label": "Twitter/X",
+//                        "pagesToTrigger": "custom",
+//                        "regex": "https?://([\\-\\w]+\\.)*(twitter|x)\\.com/.*"
+//                    },
+//                    {
+//                        "mode": "appbrowser",
+//                        "label": "Instagram",
+//                        "pagesToTrigger": "custom",
+//                        "regex": "https?://([-\\w]+\\.)*instagram\\.com/.*"
+//                    },
+//                    {
+//                        "mode": "appbrowser",
+//                        "label": "Google Maps",
+//                        "pagesToTrigger": "custom",
+//                        "regex": "https?://maps\\.google\\.com.*"
+//                    },
+//                    {
+//                        "mode": "appbrowser",
+//                        "label": "Google Maps Search",
+//                        "pagesToTrigger": "custom",
+//                        "regex": "https?://([-\\w]+\\.)*google\\.com/maps/search/.*"
+//                    },
+//                    {
+//                        "mode": "appbrowser",
+//                        "label": "LinkedIn",
+//                        "pagesToTrigger": "custom",
+//                        "regex": "https?://([-\\w]+\\.)*linkedin\\.com/.*"
+//                    },
+//                    {
+//                        "mode": "internal",
+//                        "label": "Microsoft Login",
+//                        "pagesToTrigger": "custom",
+//                        "regex": "https?://login\\.microsoftonline\\.com.*"
+//                    },
+//                    {
+//                        "mode": "appbrowser",
+//                        "label": "All Other Links",
+//                        "pagesToTrigger": "all",
+//                        "regex": ".*"
+//                    }
+//                ]
+//            },
+//            "universalLinks": [],
+//            "enableAndroidApplinks": false,
+//            "androidApplinksCertHash": "6A:BE:8D:D0:DB:37:2B:66:CC:EC:A6:1F:8E:75:4C:71:DE:D5:86:5E:CF:FE:8F:F4:70:C3:82:D9:95:5E:FF:63",
+//            "urlSchemeProtocol": ""
+//        }',
         'interface' => '{
             "keepScreenOn": true,
             "fullScreen": {
