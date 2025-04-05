@@ -32,7 +32,7 @@ class AppResource extends JsonResource
                 'branding' => !empty($this->branding) ? $this->branding : null,
                 'link_handling' => !empty($this->link_handling) ? $this->link_handling : null,
                 'interface' => !empty($this->interface) ? $this->interface : null,
-                'website_override' => !empty($this->website_override) ? $this->website_override : null,
+                'website_overide' => !empty($this->website_overide) ? $this->website_overide : null,
                 'permission' => !empty($this->permission) ? $this->permission : null,
                 'navigation' => !empty($this->navigation) ? $this->navigation : null,
                 'notification' => !empty($this->notification) ? $this->notification : null,
