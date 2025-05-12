@@ -36,6 +36,8 @@ Route::apiResource('member', ManageMemberController::class)->middleware('auth:sa
 
 Route::post("app/convert/{app}", [MyController::class, "convert"])->middleware('auth:sanctum');
 
+Route::get("preview-app/{private}/{type}", [\App\Http\Controllers\ConvertAppController::class, "fetchApp"]);
+
 Route::apiResource("app", AppsController::class)->middleware('auth:sanctum');
 
 Route::post('/upload', [\App\Http\Controllers\Api\StorageController::class, 'upload']);

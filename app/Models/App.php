@@ -331,28 +331,57 @@ class App extends Model
                         "textColorDark": "#FFFFFF"
                     }
                 },
-                "autoNewWindows": {
-                    "active": true,
-                    "items": [
-                        []
-                    ]
-                },
-                "dynamicTitles": {
-                    "active": true,
-                    "items": []
-                },
                 "customIcons": {
-                    "actions": [],
+                    "actions": [
+                        {
+                            "id": "2",
+                            "items": [
+                                {
+                                    "icon": "fas fa-rotate-right",
+                                    "label": "Refresh",
+                                    "system": "refresh",
+                                    "url": ""
+                                },
+                                {
+                                    "icon": "fas fa-share-square",
+                                    "label": "Share",
+                                    "system": "share",
+                                    "url": ""
+                                },
+                                {
+                                    "icon": "fas fa-magnifying-glass",
+                                    "label": "GSearch",
+                                    "system": "url",
+                                    "url": "https://google.com"
+                                }
+                            ]
+                        }
+                    ],
+                    "available": [
+                        {
+                            "icon": "fas fa-rotate-right",
+                            "label": "",
+                            "system": "refresh",
+                            "url": "",
+                            "name": "Refresh"
+                        },
+                        {
+                            "icon": "fas fa-share-square",
+                            "label": "Share",
+                            "system": "share",
+                            "url": "",
+                            "name": "Share"
+                        },
+                        {
+                            "icon": "fas fa-magnifying-glass",
+                            "label": "GSearch",
+                            "system": "url",
+                            "url": "https://google.com",
+                            "name": "url"
+                        }
+                    ],
                     "actionSelection": [],
                     "active": true
-                },
-                "refreshButton": {
-                    "ios": {
-                        "active": false
-                    },
-                    "android": {
-                        "active": false
-                    }
                 }
             },
             "sidebarNavigationBar": {
@@ -381,160 +410,26 @@ class App extends Model
                         "highlightColorDark": "#FFFFFF"
                     }
                 },
-                "sidebarItems": {
-                    "menuSelectionConfig": {
-                        "redirectLocations": [
-                            {
-                                "regex": ".*",
-                                "menuName": "default",
-                                "loggedIn": true
-                            }
-                        ]
+                "items": [
+                    {
+                        "url": "https://webhosting.5starcompany.com.ng/index.php",
+                        "label": "",
+                        "subLinks": [],
+                        "icon": ""
                     },
-                    "menus": [
-                        {
-                            "active": false,
-                            "items": [
-                                {
-                                    "url": "https://webhosting.5starcompany.com.ng/index.php",
-                                    "label": "",
-                                    "subLinks": []
-                                },
-                                {
-                                    "url": "https://webhosting.5starcompany.com.ng/#",
-                                    "label": "Store",
-                                    "subLinks": []
-                                },
-                                {
-                                    "url": "https://webhosting.5starcompany.com.ng/cart.php",
-                                    "label": "Browse all",
-                                    "subLinks": []
-                                },
-                                {
-                                    "url": "https://webhosting.5starcompany.com.ng/cart.php?gid=4",
-                                    "label": "Shared hosting",
-                                    "subLinks": []
-                                },
-                                {
-                                    "url": "https://webhosting.5starcompany.com.ng/cart.php?gid=1",
-                                    "label": "Ssl certificates",
-                                    "subLinks": []
-                                },
-                                {
-                                    "url": "https://webhosting.5starcompany.com.ng/cart.php?gid=8",
-                                    "label": "Web design",
-                                    "subLinks": []
-                                },
-                                {
-                                    "url": "https://webhosting.5starcompany.com.ng/cart.php?gid=10",
-                                    "label": "Developer hosting",
-                                    "subLinks": []
-                                },
-                                {
-                                    "url": "https://webhosting.5starcompany.com.ng/cart.php?gid=2",
-                                    "label": "Weebly website builder",
-                                    "subLinks": []
-                                },
-                                {
-                                    "url": "https://webhosting.5starcompany.com.ng/cart.php?gid=3",
-                                    "label": "Email spam filtering",
-                                    "subLinks": []
-                                },
-                                {
-                                    "url": "https://webhosting.5starcompany.com.ng/cart.php?gid=9",
-                                    "label": "Web development",
-                                    "subLinks": []
-                                },
-                                {
-                                    "url": "https://webhosting.5starcompany.com.ng/cart.php?gid=5",
-                                    "label": "Re-seller hosting",
-                                    "subLinks": []
-                                },
-                                {
-                                    "url": "https://webhosting.5starcompany.com.ng/cart.php?gid=6",
-                                    "label": "Vps hosting",
-                                    "subLinks": []
-                                },
-                                {
-                                    "url": "https://webhosting.5starcompany.com.ng/cart.php?gid=7",
-                                    "label": "Dedicated server",
-                                    "subLinks": []
-                                },
-                                {
-                                    "url": "https://webhosting.5starcompany.com.ng/index.php?rp=/store/ssl-certificates",
-                                    "label": "Ssl certificates",
-                                    "subLinks": []
-                                },
-                                {
-                                    "url": "https://webhosting.5starcompany.com.ng/index.php?rp=/store/website-builder",
-                                    "label": "Website builder",
-                                    "subLinks": []
-                                },
-                                {
-                                    "url": "https://webhosting.5starcompany.com.ng/index.php?rp=/store/email-services",
-                                    "label": "E-mail services",
-                                    "subLinks": []
-                                },
-                                {
-                                    "url": "https://webhosting.5starcompany.com.ng/cart.php?a=add&domain=register",
-                                    "label": "Register a new domain",
-                                    "subLinks": []
-                                },
-                                {
-                                    "url": "https://webhosting.5starcompany.com.ng/cart.php?a=add&domain=transfer",
-                                    "label": "Transfer domains to us",
-                                    "subLinks": []
-                                },
-                                {
-                                    "url": "https://webhosting.5starcompany.com.ng/index.php?rp=/announcements",
-                                    "label": "Announcements",
-                                    "subLinks": []
-                                },
-                                {
-                                    "url": "https://webhosting.5starcompany.com.ng/index.php?rp=/knowledgebase",
-                                    "label": "Knowledgebase",
-                                    "subLinks": []
-                                },
-                                {
-                                    "url": "https://webhosting.5starcompany.com.ng/serverstatus.php",
-                                    "label": "Network status",
-                                    "subLinks": []
-                                },
-                                {
-                                    "url": "https://webhosting.5starcompany.com.ng/affiliates.php",
-                                    "label": "Affiliates",
-                                    "subLinks": []
-                                },
-                                {
-                                    "url": "https://webhosting.5starcompany.com.ng/contact.php",
-                                    "label": "Contact us",
-                                    "subLinks": []
-                                },
-                                {
-                                    "url": "https://webhosting.5starcompany.com.ng/clientarea.php",
-                                    "label": "Login",
-                                    "subLinks": []
-                                },
-                                {
-                                    "url": "https://webhosting.5starcompany.com.ng/register.php",
-                                    "label": "Register",
-                                    "subLinks": []
-                                },
-                                {
-                                    "url": "https://webhosting.5starcompany.com.ng/pwreset.php",
-                                    "label": "Forgot password?",
-                                    "subLinks": []
-                                },
-                                {
-                                    "url": "https://tawk.to/chat/5b3a09246d961556373d53e3/default/?$_tawk_popout=true",
-                                    "label": "Chat now",
-                                    "subLinks": []
-                                }
-                            ],
-                            "name": "default"
-                        }
-                    ]
-                }
+                    {
+                        "url": "https://webhosting.5starcompany.com.ng/#",
+                        "label": "Store",
+                        "subLinks": [],
+                        "icon": "fas fa-store"
+                    },
+                    {
+                        "url": "https://webhosting.5starcompany.com.ng/cart.php",
+                        "label": "Browse all",
+                        "subLinks": [],
+                        "icon": "fas fa-store"
+                    }
+                ]
             },
             "bottomTabBar": {
                 "active": false,
@@ -554,11 +449,49 @@ class App extends Model
                         "inactiveColorDark": "#818181"
                     }
                 },
-                "bottomTabBarItems": {
-                    "active": false,
-                    "tabMenus": [],
-                    "tabSelectionConfig": []
-                }
+                "tabMenus": [
+                    {
+                        "items": [
+                            {
+                                "icon": "fas fa-home",
+                                "inactiveIcon": "far fa-home",
+                                "label": "Home",
+                                "url": "https://webhosting.5starcompany.com.ng/"
+                            },
+                            {
+                                "label": "News",
+                                "icon": "fas fa-newspaper",
+                                "inactiveIcon": "far fa-newspaper",
+                                "url": "https://webhosting.5starcompany.com.ng/news"
+                            },
+                            {
+                                "label": "Directory",
+                                "icon": "fas fa-address-book",
+                                "inactiveIcon": "far fa-address-book",
+                                "url": "https://webhosting.5starcompany.com.ng/directory"
+                            },
+                            {
+                                "icon": "fas fa-anchor-circle-check",
+                                "label": "Sammy",
+                                "system": "javascript",
+                                "url": "javascript:"
+                            }
+                        ],
+                        "availableIcons":[
+                            "fas fa-align-justify",
+                            "fas fa-align-left",
+                            "fas fa-anchor-circle-xmark",
+                            "fas fa-angle-right",
+                            "fas fa-ankh",
+                            "fas fa-arrow-up-long",
+                            "fas fa-asterisk",
+                            "fas fa-hourglass",
+                            "fas fa-house-lock",
+                            "fas fa-home",
+                            "fas fa-newspaper"
+                        ]
+                    }
+                ]
             }
         }',
         'notification'=>'{
