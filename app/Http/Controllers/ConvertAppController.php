@@ -45,7 +45,7 @@ class ConvertAppController extends Controller
         $fullscreen = $app->interface['fullScreen'][$type];
         $enableAdvt = strtolower($app->plan) == 'free' ? "true" : "false";
 
-        $menus = $app->navigation['bottomTabBar']['tabMenus']['items'];
+        $menus = $app->navigation['bottomTabBar']['tabMenus'][0]['items'];
         $enableMenu = "true";
 
 
