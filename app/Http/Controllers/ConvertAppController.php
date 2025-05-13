@@ -42,7 +42,7 @@ class ConvertAppController extends Controller
             ]);
         }
 
-        $fullscreen = $app->interface['fullScreen'][$type];
+        $fullscreen = $app->interface['fullScreen'][$type] == 1 ? "true" : "false";
         $enableAdvt = strtolower($app->plan) == 'free' ? "true" : "false";
 
         $menus = $app->navigation['bottomTabBar']['tabMenus'][0]['items'];
