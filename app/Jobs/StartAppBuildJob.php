@@ -1,48 +1,52 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Jobs;
 
-use App\Jobs\StartAppBuildJob;
 use App\Models\App;
 use App\Models\Build;
 use App\Models\convert;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
-class ConvertAppController extends Controller
+class StartAppBuildJob implements ShouldQueue
 {
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
     /**
-     * Handle the incoming request.
+     * Create a new job instance.
      *
-     * @param Request $request
-     * @return Response
+     * @return void
      */
-    public function __invoke(Request $request)
+
+    public $reference;
+    public function __construct($reference)
     {
-        convert::updateOrCreate([
-            "url" => $request->url,
-            "email" => $request->email
-        ]);
+        $this->reference=$reference;
     }
 
-    public function fetchApp(string $private, string $type)
+    /**
+     * Execute the job.
+     *
+     * @return void
+     */
+    public function handle()
     {
-        $app = App::where('private_link', $private)->latest()->first();
+
+        $reference=$this->reference;
+
+        $app = App::where('private_link', $reference)->latest()->first();
 
         if (!$app) {
-            return response()->json([
-                'error' => 'App not found',
-                'status' => false,
-            ]);
+            echo "App not found";
+            return;
         }
 
-        if (!in_array($type, ['android', 'ios'])) {
-            return response()->json([
-                'error' => 'Type not supported',
-                'status' => false,
-            ]);
-        }
+        $type="android";
 
         $fullscreen = data_get($app->interface, "fullScreen.{$type}", false) ? 'true' : 'false';
         $enableAdvt = Str::lower(data_get($app->plan, '')) === 'free' ? 'true' : 'false';
@@ -173,80 +177,61 @@ class ConvertAppController extends Controller
             'services' => (object) [],
         ];
 
-        return response()->json([
-            'data' => $config,
-            'error' => '',
-            'status' => true,
-        ]);
-    }
+        $app_config=base64_encode(json_encode($config));
 
-    public function buidApp(string $private, string $type)
-    {
-        $app = App::where('private_link', $private)->latest()->first();
-
-        if (!$app) {
-            return response()->json([
-                'error' => 'App not found',
-                'status' => false,
-            ]);
-        }
-
-        if (!in_array($type, ['android', 'ios'])) {
-            return response()->json([
-                'error' => 'Type not supported',
-                'status' => false,
-            ]);
-        }
-
-        StartAppBuildJob::dispatch($app->private_link);
-
-        return response()->json([
-            'message' => "Build Started Successfully",
-            'error' => '',
-            'status' => true,
-        ]);
-    }
-
-    public function buidAppStatus(string $private, string $type)
-    {
-        $app = App::where('private_link', $private)->latest()->first();
-
-        if (!$app) {
-            return response()->json([
-                'error' => 'App not found',
-                'status' => false,
-            ]);
-        }
-
-        if (!in_array($type, ['android', 'ios'])) {
-            return response()->json([
-                'error' => 'Type not supported',
-                'status' => false,
-            ]);
-        }
-
-        $build=Build::where('reference_code',$app->private_link)->latest()->first();
-
-
+        $input['reference_code']=$reference;
+        $input['config']=$app_config;
+        $packageName=strtolower($app->plan) == 'free' ? "com.web2app" : $packageName;
+        $build=Build::create($input);
+        $icon=data_get($app->branding, 'app_icon', 'https://web2app.5starcompany.com.ng/images/w2a.jpg');
+        $app_version=data_get($app->build_setting, 'appIdentifiers.android.version', '1');
+        $firebase="";
+//            $firebase=base64_encode($conv->firebase);
 
         if($app->plan=="premium"){
+            $appId=env('BUILD_APPID_PREMIUM');
+            $workflowId=env('BUILD_WORKFLOWID_PREMIUM');
             $auth=env('BUILD_APIKEY_PREMIUM');
         }else{
+            $appId=env('BUILD_APPID');
+            $workflowId=env('BUILD_WORKFLOWID');
             $auth=env('BUILD_APIKEY');
         }
+        $xcode_version=env('BUILD_XCODE_VERSION', "latest");
+        $branch=env('BUILD_BRANCH', "main");
 
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.codemagic.io/builds/'.$build->build_id,
+            CURLOPT_URL => 'https://api.codemagic.io/builds',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
             CURLOPT_TIMEOUT => 0,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_POSTFIELDS => '{
+"appId": "'.$appId.'",
+"workflowId": "'.$workflowId.'",
+"branch": "'.$branch.'",
+"environment": {
+    "variables": {
+        "APP_CONFIG": "'.$app_config.'",
+        "APP_NAME": "'.$app->name.'",
+        "APP_PACKAGE_NAME": "'.$packageName.'",
+        "APP_REFERENCE": "'.$reference.'",
+        "APP_LOGO": "'.$icon.'",
+        "APP_VERSION": "'.$app_version.'",
+        "APP_FIREBASE": "'.$firebase.'"
+    },
+    "groups": [
+        "variable_group_1",
+        "variable_group_2"
+    ]
+}
+}',
             CURLOPT_HTTPHEADER => array(
                 'x-auth-token: '.$auth,
                 'Content-Type: application/json'
@@ -256,64 +241,17 @@ class ConvertAppController extends Controller
         $response = curl_exec($curl);
 
         curl_close($curl);
+        Log::info("Build Started: ".$reference." : ".$response);
+//            echo $response;
 
-//        echo $response;
+//            dd($response);
 
 //        {"buildId":"5fabc6414c483700143f4f92"}
 
         $resp=json_decode($response, true);
 
-        $build_status=$resp['build']['status'];
-
-        if($build_status=="finished"){
-            $android = "";
-            $aab = "";
-            $ios = "";
-
-            foreach ($resp['build']['artefacts'] as $artefact) {
-                if ($artefact['type'] == "apk") {
-                    $android = $artefact['url'];
-                }
-
-                if ($artefact['type'] == "aab") {
-                    $aab = $artefact['url'];
-                }
-
-                if ($artefact['type'] == "app") {
-                    $ios = $artefact['url'];
-                }
-            }
-
-
-            // Access the app_settings attribute as an array
-            $settings = $app->build_setting;
-
-            // Check if build_setting and ios exist
-            if (isset($settings['build_setting']) && isset($settings['build_setting']['downloadLinks'])) {
-                // Update the bundleId
-                $settings['downloadLinks']['androidLink'] = $android;
-                $settings['downloadLinks']['androidAppBundleLink'] = $aab;
-                $settings['downloadLinks']['iosSource'] = $ios;
-
-                // Assign the modified array back to the attribute
-                $app->build_setting = $settings;
-                $app->save();
-            }
-        }
-
-
-        try {
-            return response()->json([
-                'message' => $build_status,
-                'error' => '',
-                'status' => true,
-            ]);
-        }catch (\Exception $e){
-            return response()->json([
-                'message' => "Build not found",
-                'error' => '',
-                'status' => false,
-            ]);
-        }
+        $build->build_id=$resp['buildId'];
+        $build->save();
     }
+
 }

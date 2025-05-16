@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AppsController;
+use App\Http\Controllers\ConvertAppController;
 use App\Http\Controllers\CreateAppController;
 use App\Http\Controllers\ManageMemberController;
 use App\Http\Controllers\MyController;
@@ -36,7 +37,9 @@ Route::apiResource('member', ManageMemberController::class)->middleware('auth:sa
 
 Route::post("app/convert/{app}", [MyController::class, "convert"])->middleware('auth:sanctum');
 
-Route::get("preview-app/{private}/{type}", [\App\Http\Controllers\ConvertAppController::class, "fetchApp"]);
+Route::get("preview-app/{private}/{type}", [ConvertAppController::class, "fetchApp"]);
+Route::put("build-app/{private}/{type}", [ConvertAppController::class, "buidApp"]);
+Route::get("build-app-status/{private}/{type}", [ConvertAppController::class, "buidAppStatus"]);
 
 Route::apiResource("app", AppsController::class)->middleware('auth:sanctum');
 
