@@ -180,6 +180,34 @@ class ConvertAppController extends Controller
         ]);
     }
 
+    public function fetchPubApp(string $public)
+    {
+        $app = App::where('public_link', $public)->latest()->first();
+
+        if (!$app) {
+            return response()->json([
+                'error' => 'App not found',
+                'status' => false,
+            ]);
+        }
+
+        $config = [
+            'name' => $app->name,
+            'url' => $app->url,
+            'private_link' => $app->private_link,
+            'public_link' => $app->public_link,
+            'description' => $app->description,
+            'plan' => $app->plan,
+            'build_setting' => !empty($app->build_setting) ? $app->build_setting : null,
+        ];
+
+        return response()->json([
+            'data' => $config,
+            'error' => '',
+            'status' => true,
+        ]);
+    }
+
     public function buidApp(string $private, string $type)
     {
         $app = App::where('private_link', $private)->latest()->first();
