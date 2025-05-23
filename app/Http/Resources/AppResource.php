@@ -24,7 +24,7 @@ class AppResource extends JsonResource
                 'name' => $this->name,
                 'url' => $this->url,
                 'private_link' => $this->private_link,
-                'public_link' => $this->public_link,
+                'public_link' => env('FRONTEND').'app/share/'.$this->public_link,
                 'description' => $this->description,
                 'plan' => $this->plan,
                 'role' => $this->whenLoaded("role"),
